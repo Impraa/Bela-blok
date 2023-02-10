@@ -1,0 +1,39 @@
+@import "../variables";
+
+.navbar {
+  display: grid;
+  grid-template-columns: 9fr 1fr;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 1.2em;
+  .navbar-hero {
+    display: flex;
+    align-items: center;
+    .navbar-title {
+      text-decoration: none;
+      font-size: 1em;
+      font-weight: 600;
+      color: white;
+      transition: 0.2s ease-in;
+      &:hover {
+        cursor: pointer;
+        color: $karoRed;
+      }
+    }
+    .navbar-image {
+      height: 2em;
+      margin-right: 0.5em;
+    }
+  }
+  .navbar-navitems-container {
+    opacity: 0;
+    height: 0;
+    transition: 0.2s ease-in all;
+  }
+  .navbar-navitems-container-display {
+    transition: 0.2s ease-in all;
+    opacity: 1;
+    display: flex;
+    height: 2em;
+  }
+}
