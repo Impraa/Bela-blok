@@ -1,0 +1,39 @@
+@import "../variables";
+
+.homepage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 17.5em 6em;
+  background-color: $background;
+  border-radius: 0.2em;
+  box-shadow: -0.2em 0.3em 0.6em #000;
+  .greetings {
+    margin-bottom: 0;
+    margin-top: 0.8em;
+    font-size: 2.5em;
+  }
+  .pagename {
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+    font-size: 2.5em;
+  }
+  .start-game-btn {
+    margin-bottom: 1em;
+    font-size: 1.5em;
+    padding: 0.5em 1.2em;
+    border-radius: 0.2em;
+    background-color: $background;
+    border: 0.5px solid white;
+    color: white;
+    box-shadow: -0.2em 0.3em 0.3em #000;
+    transition: 0.5s ease-out;
+    &:hover {
+      cursor: pointer;
+      color: $karoRed;
+      border-color: $karoRed;
+      box-shadow: 0px 5px 100px $karoRed;
+    }
+  }
+}

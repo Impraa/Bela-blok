@@ -1,4 +1,14 @@
+@import "../variables";
 .footer {
+  width: 100vw;
+  height: 2.5em;
+  display: flex;
+  align-items: center;
+  background-color: $background;
   position: fixed;
   bottom: 0;
+  .copysymbol {
+    color: $karoRed;
+    margin: 0 0.5em;
+  }
 }

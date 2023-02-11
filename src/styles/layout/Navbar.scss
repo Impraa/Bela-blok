@@ -1,11 +1,13 @@
 @import "../variables";
 
 .navbar {
+  background-color: $background;
   display: grid;
   grid-template-columns: 9fr 1fr;
   align-items: center;
   justify-content: space-between;
-  margin: 0 1.2em;
+  padding: 0 1.2em;
+  border-radius: 0 0 0.75em 0.75em;
   .navbar-hero {
     display: flex;
     align-items: center;
@@ -22,7 +24,7 @@
     }
     .navbar-image {
       height: 2em;
-      margin-right: 0.5em;
+      padding-right: 0.5em;
     }
   }
   .navbar-navitems-container {

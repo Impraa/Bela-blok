@@ -6,17 +6,20 @@ import { useState } from "react";
 
 function Navbar() {
   const [style, setStyle] = useState<string>("");
+  const Fade = require("react-reveal/Fade");
 
   return (
     <div className="navbar">
-      <div className="navbar-hero">
-        <img src={karo} alt="" className="navbar-image" />
-        <h1>
-          <Link to="/" className="navbar-title">
-            Bela Blok
-          </Link>
-        </h1>
-      </div>
+      <Fade bottom distance={"25%"}>
+        <div className="navbar-hero">
+          <img src={karo} alt="" className="navbar-image" />
+          <h1>
+            <Link to="/" className="navbar-title">
+              Bela Blok
+            </Link>
+          </h1>
+        </div>
+      </Fade>
       <Hamburger
         onToggle={(toggled) => {
           if (toggled) {
