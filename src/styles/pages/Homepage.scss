@@ -7,7 +7,7 @@
   justify-content: center;
   margin: 17.5em 6em;
   background-color: $background;
-  border-radius: 0.2em;
+  border-radius: 0.25em;
   box-shadow: -0.2em 0.3em 0.6em #000;
   .greetings {
     margin-bottom: 0;
@@ -20,20 +20,45 @@
     font-size: 2.5em;
   }
   .start-game-btn {
+    text-decoration: none;
     margin-bottom: 1em;
-    font-size: 1.5em;
+    font-size: 1.4em;
     padding: 0.5em 1.2em;
     border-radius: 0.2em;
     background-color: $background;
     border: 0.5px solid white;
     color: white;
     box-shadow: -0.2em 0.3em 0.3em #000;
-    transition: 0.5s ease-out;
+    transition: 0.2s ease-out;
     &:hover {
       cursor: pointer;
       color: $karoRed;
       border-color: $karoRed;
       box-shadow: 0px 5px 100px $karoRed;
     }
+  }
+}
+
+@media (min-width: 768px) {
+  .homepage {
+    margin: 17.5em 10em;
+  }
+}
+
+@media (min-width: 1024px) {
+  .homepage {
+    margin: 17.5em 17.5em;
+  }
+}
+
+@media (min-width: 1440px) {
+  .homepage {
+    margin: 17.5em 29em;
+  }
+}
+
+@media (min-width: 1920px) {
+  .homepage {
+    margin: 17.5em 39em;
   }
 }

@@ -1,0 +1,13 @@
+@import "../../variables";
+
+.navitem {
+  text-decoration: none;
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+  color: white;
+  transition: 0.25s;
+  &:hover {
+    color: $karoRed;
+    font-size: 1.8em;
+  }
+}

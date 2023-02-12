@@ -3,6 +3,7 @@
   width: 100vw;
   height: 2.5em;
   display: flex;
+  letter-spacing: 0.05em;
   align-items: center;
   background-color: $background;
   position: fixed;
@@ -10,5 +11,11 @@
   .copysymbol {
     color: $karoRed;
     margin: 0 0.5em;
+  }
+}
+
+@media (min-width: 768px) {
+  .footer {
+    font-size: 1.2em;
   }
 }

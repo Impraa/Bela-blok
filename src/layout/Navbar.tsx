@@ -3,10 +3,18 @@ import "../styles/layout/Navbar.scss";
 import { Link } from "react-router-dom";
 import { Squeeze as Hamburger } from "hamburger-react";
 import { useState } from "react";
+import { NavItems } from "../utils/Interfaces";
+import NavItem from "./components/NavItem";
 
 function Navbar() {
   const [style, setStyle] = useState<string>("");
   const Fade = require("react-reveal/Fade");
+
+  const NavItems: NavItems[] = [
+    { text: "Blok", path: "/game" },
+    { text: "FAQ", path: "/faq" },
+    { text: "Kontaktiraj me", path: "/contact" },
+  ];
 
   return (
     <div className="navbar">
@@ -33,7 +41,9 @@ function Navbar() {
         rounded
       />
       <div className={style.length > 1 ? style : "navbar-navitems-container"}>
-        Navitems
+        {NavItems.map((navitem: NavItems, i: number) => {
+          return <NavItem key={i} {...navitem} />;
+        })}
       </div>
     </div>
   );

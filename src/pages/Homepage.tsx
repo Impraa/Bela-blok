@@ -1,5 +1,6 @@
 import React from "react";
 import "../styles/pages/Homepage.scss";
+import { Link } from "react-router-dom";
 
 function Homepage() {
   const Flip = require("react-reveal/Flip");
@@ -12,7 +13,9 @@ function Homepage() {
       <Flip bottom>
         <h3 className="pagename">na Bela Blok</h3>
       </Flip>
-      <button className="start-game-btn">Započni</button>
+      <Link to="/game" className="start-game-btn">
+        Započni
+      </Link>
     </div>
   );
 }
