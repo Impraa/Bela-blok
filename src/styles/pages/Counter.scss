@@ -1,0 +1,124 @@
+@import "../variables";
+
+.counter {
+  display: flex;
+  flex-direction: column;
+  margin: 7.5em 4em;
+  .team-btns {
+    .first-team-btn {
+      border: 0.5px solid $background;
+      border-right: none;
+      background-color: $background;
+      font-size: 1.5em;
+      color: white;
+      transition: 0.2s ease-in;
+      &:hover {
+        transform: scale(1.02);
+        color: $karoRed;
+      }
+    }
+    .second-team-btn {
+      border: 0.5px solid $background;
+      border-left: none;
+      background-color: $background;
+      font-size: 1.5em;
+      color: white;
+      &:hover {
+        transform: scale(1.02);
+        color: $karoRed;
+      }
+    }
+    .active {
+      border: 0.5px solid $background;
+      background-color: $background;
+      font-size: 1.5em;
+      color: $karoRed;
+      &:hover {
+        transform: scale(1.02);
+        color: white;
+      }
+    }
+  }
+  .board {
+    background-color: $background;
+    height: 35em;
+    display: grid;
+    grid-template-columns: 15em 10em;
+    .options {
+      .team-name {
+        font-size: 1.4em;
+      }
+      .choose-color {
+        .color {
+          font-size: 1.4em;
+        }
+        .colors {
+          .heart-karo {
+            font-size: 2.5em;
+            color: $karoRed;
+            transition: 0.2s ease-in;
+            &:hover {
+              font-size: 2.9em;
+            }
+          }
+          .spade,
+          .club {
+            font-size: 2.5em;
+            transition: 0.2s ease-in;
+            &:hover {
+              font-size: 2.9em;
+            }
+          }
+        }
+      }
+      .write-score {
+        margin-top: 0.5em;
+        display: flex;
+        flex-direction: column;
+        font-size: 1.4em;
+        .input {
+          margin-top: 0.5em;
+          margin-left: 0.5em;
+          margin-right: 2em;
+          font-size: 1.2em;
+          background-color: $background;
+          border: none;
+          color: white;
+          border-bottom: 2px solid $karoRed;
+          transition: 0.2s ease-in;
+          &:hover {
+            transform: scale(1.1);
+          }
+          &:focus {
+            transform: scale(1.1);
+            outline: none;
+          }
+        }
+        input::-webkit-inner-spin-button,
+        input::-webkit-outer-spin-button {
+          display: none;
+        }
+        .write-score-btn {
+          align-self: center;
+          margin-right: 1.3em;
+          margin-top: 1em;
+          padding: 0.2em 1em;
+          font-size: 1.2em;
+          background-color: $background;
+          border: 0.5px solid white;
+          color: white;
+          transition: 0.2s ease-in;
+          &:hover {
+            border-color: $karoRed;
+            color: $karoRed;
+            transform: scale(1.2);
+          }
+        }
+      }
+    }
+  }
+  .score {
+    margin-top: 1em;
+    font-size: 1.2em;
+  }
+}
