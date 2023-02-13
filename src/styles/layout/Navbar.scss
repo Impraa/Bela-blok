@@ -30,6 +30,7 @@
   }
   .navbar-navitems-container {
     opacity: 0;
+    pointer-events: none;
     height: 0;
     display: flex;
     flex-direction: column;

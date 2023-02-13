@@ -3,7 +3,13 @@
 .counter {
   display: flex;
   flex-direction: column;
-  margin: 7.5em 4em;
+  margin: 5em 4em;
+  .flash-message {
+    transition: 0.2s ease-in;
+    background-color: $karoRed;
+    align-self: center;
+    padding: 0.5em 2em;
+  }
   .team-btns {
     .first-team-btn {
       border: 0.5px solid $background;
@@ -41,7 +47,7 @@
   }
   .board {
     background-color: $background;
-    height: 35em;
+    height: 39.7em;
     display: grid;
     grid-template-columns: 15em 10em;
     .options {
@@ -114,11 +120,44 @@
             transform: scale(1.2);
           }
         }
+        .callings-button {
+          background-color: $background;
+          border: 0.5px solid white;
+          color: white;
+          font-size: 1.1em;
+          transition: 0.2s ease-in;
+          margin: 0 0.8em;
+          &:hover {
+            border-color: $karoRed;
+            color: $karoRed;
+            transform: scale(1.2);
+          }
+        }
       }
     }
   }
   .score {
     margin-top: 1em;
     font-size: 1.2em;
+    height: 32em;
+    overflow: scroll;
+    padding-left: 0.2em;
+    font-size: 1.4em;
+    .games {
+      .delete-calling-btn {
+        color: $karoRed;
+        margin-left: 1em;
+        font-size: 1em;
+        border: 1.5px solid $karoRed;
+        background-color: $background;
+        transition: 0.2s ease-in;
+        &:hover {
+          background-color: white;
+        }
+      }
+    }
+  }
+  .score::-webkit-scrollbar {
+    display: none;
   }
 }
