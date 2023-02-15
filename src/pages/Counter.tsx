@@ -39,25 +39,22 @@ function Counter() {
   function handleDeleteBonusPoint(i: number, index: number) {
     if (active === "1") {
       const updatedFirstTeamScore = [...firstTeamScore];
-      const deletedBonusPoint = updatedFirstTeamScore[index].bonusPoints[i];
       updatedFirstTeamScore[index].bonusPoints.splice(i, 1);
       setFirstTeamScore(updatedFirstTeamScore);
-      setFirstTeamTotal(firstTeamTotal - deletedBonusPoint);
     } else {
       const updatedSecondTeamScore = [...secondTeamScore];
-      const deletedBonusPoint = updatedSecondTeamScore[index].bonusPoints[i];
       updatedSecondTeamScore[index].bonusPoints.splice(i, 1);
       setSecondTeamScore(updatedSecondTeamScore);
-      setSecondTeamTotal(secondTeamTotal - deletedBonusPoint);
     }
   }
 
   const updateTeamScore = (number: React.RefObject<HTMLInputElement>) => {
+    let num = Number(number.current!.value);
     if (active === "1") {
       setFirstTeamScore((prevTeam) => {
         const updatedTeam = [...prevTeam];
         if (updatedTeam[counter]) {
-          updatedTeam[counter].score = Number(number.current!.value);
+          updatedTeam[counter].score = num;
           setFirstTeamTotal(
             updatedTeam[counter].score +
               updatedTeam[counter].bonusPoints.reduce((a, b) => a + b, 0) +
@@ -65,17 +62,17 @@ function Counter() {
           );
         } else {
           updatedTeam.push({
-            score: Number(number.current!.value),
+            score: num,
             bonusPoints: [],
           });
-          setFirstTeamTotal(Number(number.current!.value) + firstTeamTotal);
+          setFirstTeamTotal(num + firstTeamTotal);
         }
         return updatedTeam;
       });
       setSecondTeamScore((prevTeam) => {
         const updatedTeam = [...prevTeam];
         if (updatedTeam[counter]) {
-          updatedTeam[counter].score = 162 - Number(number.current!.value);
+          updatedTeam[counter].score = 162 - num;
           setSecondTeamTotal(
             updatedTeam[counter].score +
               updatedTeam[counter].bonusPoints.reduce((a, b) => a + b, 0) +
@@ -83,12 +80,11 @@ function Counter() {
           );
         } else {
           updatedTeam.push({
-            score: 162 - Number(number.current!.value),
+            score: 162 - num,
             bonusPoints: [],
           });
           setSecondTeamTotal(updatedTeam[counter].score + secondTeamTotal);
         }
-        number.current!.value = "";
         setColor("");
         return updatedTeam;
       });
@@ -97,7 +93,7 @@ function Counter() {
       setSecondTeamScore((prevTeam) => {
         const updatedTeam = [...prevTeam];
         if (updatedTeam[counter]) {
-          updatedTeam[counter].score = Number(number.current!.value);
+          updatedTeam[counter].score = num;
           setSecondTeamTotal(
             updatedTeam[counter].score +
               updatedTeam[counter].bonusPoints.reduce((a, b) => a + b, 0) +
@@ -105,7 +101,7 @@ function Counter() {
           );
         } else {
           updatedTeam.push({
-            score: Number(number.current!.value),
+            score: num,
             bonusPoints: [],
           });
           setSecondTeamTotal(updatedTeam[counter].score + secondTeamTotal);
@@ -115,7 +111,7 @@ function Counter() {
       setFirstTeamScore((prevTeam) => {
         const updatedTeam = [...prevTeam];
         if (updatedTeam[counter]) {
-          updatedTeam[counter].score = 162 - Number(number.current!.value);
+          updatedTeam[counter].score = 162 - num;
           setFirstTeamTotal(
             updatedTeam[counter].score +
               updatedTeam[counter].bonusPoints.reduce((a, b) => a + b, 0) +
@@ -123,17 +119,17 @@ function Counter() {
           );
         } else {
           updatedTeam.push({
-            score: 162 - Number(number.current!.value),
+            score: 162 - num,
             bonusPoints: [],
           });
           setFirstTeamTotal(updatedTeam[counter].score + firstTeamTotal);
         }
-        number.current!.value = "";
         setColor("");
         return updatedTeam;
       });
       setCounter(counter + 1);
     }
+    number.current!.value = "";
   };
 
   const updateTeamCallings = (number: number) => {
@@ -181,7 +177,7 @@ function Counter() {
             updateActive(event);
           }}
         >
-          Prvi team-Vi
+          Prvi team-Mi
         </button>
         <button
           className={active === "2" ? "active" : "second-team-btn"}
@@ -190,14 +186,14 @@ function Counter() {
             updateActive(event);
           }}
         >
-          Drugi team-Oni
+          Drugi team-Vi
         </button>
       </div>
       <div className="board">
         <div className="options">
           <p className="team-name">
             {active === "1" ? "Prvi" : "Drugi"} team-
-            {active === "1" ? "Vi" : "Oni"}
+            {active === "1" ? "Mi" : "Vi"}
           </p>
           <div className="choose-color">
             <p className="color">Adut je: {color}</p>
@@ -338,47 +334,32 @@ function Counter() {
         <div className="score">
           <div className="games">
             Bodovi:
-            {active === "1"
-              ? firstTeamScore.map((item, index) => (
-                  <div key={index}>
-                    <div>
-                      Zvanja:
-                      {item.bonusPoints.map((point, i) => (
-                        <p key={i}>
-                          {point}
+            {[firstTeamScore, secondTeamScore][active === "1" ? 0 : 1].map(
+              (item, index) => (
+                <div key={index}>
+                  <div>
+                    Zvanja:
+                    {item.bonusPoints.map((point, i) => (
+                      <p key={i}>
+                        {point}
+                        {item.score !== 0 ? (
+                          ""
+                        ) : (
                           <button
                             className="delete-calling-btn"
                             onClick={() => handleDeleteBonusPoint(i, index)}
                           >
                             X
                           </button>
-                        </p>
-                      ))}
-                    </div>
-                    <p>{item.score}</p>
+                        )}
+                      </p>
+                    ))}
                   </div>
-                ))
-              : secondTeamScore.map((item, index) => {
-                  return (
-                    <div key={index}>
-                      <div>
-                        Zvanja:
-                        {item.bonusPoints.map((point, i) => (
-                          <p key={i}>
-                            {point}
-                            <button
-                              className="delete-calling-btn"
-                              onClick={() => handleDeleteBonusPoint(i, index)}
-                            >
-                              X
-                            </button>
-                          </p>
-                        ))}
-                      </div>
-                      <p>{item.score}</p>
-                    </div>
-                  );
-                })}
+                  <p>Igra:</p>
+                  <p>{item.score}</p>
+                </div>
+              )
+            )}
           </div>
           <div className="total">
             Sveukupno:
