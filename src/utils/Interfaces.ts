@@ -8,3 +8,13 @@ export interface Teams{
     bonusPoints: number[],
 }
 
+export interface Cards{
+    id:string,
+    label:string,
+    className:string,
+}
+
+export interface Callings{
+    id:string,
+    text:string,
+}

@@ -59,7 +59,8 @@
           font-size: 1.4em;
         }
         .colors {
-          .heart-karo {
+          .heart,
+          .karo {
             font-size: 2.5em;
             color: $karoRed;
             transition: 0.2s ease-in;

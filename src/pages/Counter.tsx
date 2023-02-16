@@ -1,18 +1,37 @@
 import React, { useRef } from "react";
 import "../styles/pages/Counter.scss";
 import { useState } from "react";
-import { Teams } from "../utils/Interfaces";
+import { Cards, Teams, Callings } from "../utils/Interfaces";
 
 function Counter() {
   const [active, setActive] = useState<string>("1");
   const [color, setColor] = useState<string>("");
+  const [showMessage, setShowMessage] = useState<boolean>(false);
+  const [counter, setCounter] = useState<number>(0);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const [firstTeamScore, setFirstTeamScore] = useState<Teams[]>([]);
   const [secondTeamScore, setSecondTeamScore] = useState<Teams[]>([]);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [counter, setCounter] = useState<number>(0);
   const [firstTeamTotal, setFirstTeamTotal] = useState<number>(0);
   const [secondTeamTotal, setSecondTeamTotal] = useState<number>(0);
-  const [showMessage, setShowMessage] = useState<boolean>(false);
+
+  const colorOptions: Cards[] = [
+    { id: "Herc", label: "♥", className: "heart" },
+    { id: "Kara", label: "♦", className: "karo" },
+    { id: "Pik", label: "♠", className: "spade" },
+    { id: "Tref", label: "♣", className: "club" },
+  ];
+
+  const callingOptions: Callings[] = [
+    { id: "20", text: "3 zaredom / Bela" },
+    { id: "50", text: "4 zaredom" },
+    { id: "100", text: "5 zaredom" },
+    { id: "100", text: "4 iste" },
+    { id: "150", text: "4 deve" },
+    { id: "200", text: "4 decka" },
+    { id: "1001", text: "Belot" },
+  ];
 
   const handleClickButton = () => {
     setShowMessage(true);
@@ -23,12 +42,8 @@ function Counter() {
 
   const updateActive = (event: React.MouseEvent<HTMLButtonElement>) => {
     let id = event.currentTarget.id;
-    if (id === "first-btn") {
-      setActive("1");
-    }
-    if (id === "second-btn") {
-      setActive("2");
-    }
+    const value = id === "first-btn" ? "1" : "2";
+    setActive(value);
   };
 
   const updateColor = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -49,117 +64,80 @@ function Counter() {
   }
 
   const updateTeamScore = (number: React.RefObject<HTMLInputElement>) => {
-    let num = Number(number.current!.value);
-    if (active === "1") {
-      setFirstTeamScore((prevTeam) => {
-        const updatedTeam = [...prevTeam];
-        if (updatedTeam[counter]) {
-          updatedTeam[counter].score = num;
-          setFirstTeamTotal(
-            updatedTeam[counter].score +
-              updatedTeam[counter].bonusPoints.reduce((a, b) => a + b, 0) +
-              firstTeamTotal
-          );
-        } else {
-          updatedTeam.push({
-            score: num,
-            bonusPoints: [],
-          });
-          setFirstTeamTotal(num + firstTeamTotal);
-        }
-        return updatedTeam;
-      });
-      setSecondTeamScore((prevTeam) => {
-        const updatedTeam = [...prevTeam];
-        if (updatedTeam[counter]) {
-          updatedTeam[counter].score = 162 - num;
-          setSecondTeamTotal(
-            updatedTeam[counter].score +
-              updatedTeam[counter].bonusPoints.reduce((a, b) => a + b, 0) +
-              secondTeamTotal
-          );
-        } else {
-          updatedTeam.push({
-            score: 162 - num,
-            bonusPoints: [],
-          });
-          setSecondTeamTotal(updatedTeam[counter].score + secondTeamTotal);
-        }
-        setColor("");
-        return updatedTeam;
-      });
-      setCounter(counter + 1);
-    } else {
-      setSecondTeamScore((prevTeam) => {
-        const updatedTeam = [...prevTeam];
-        if (updatedTeam[counter]) {
-          updatedTeam[counter].score = num;
-          setSecondTeamTotal(
-            updatedTeam[counter].score +
-              updatedTeam[counter].bonusPoints.reduce((a, b) => a + b, 0) +
-              secondTeamTotal
-          );
-        } else {
-          updatedTeam.push({
-            score: num,
-            bonusPoints: [],
-          });
-          setSecondTeamTotal(updatedTeam[counter].score + secondTeamTotal);
-        }
-        return updatedTeam;
-      });
-      setFirstTeamScore((prevTeam) => {
-        const updatedTeam = [...prevTeam];
-        if (updatedTeam[counter]) {
-          updatedTeam[counter].score = 162 - num;
-          setFirstTeamTotal(
-            updatedTeam[counter].score +
-              updatedTeam[counter].bonusPoints.reduce((a, b) => a + b, 0) +
-              firstTeamTotal
-          );
-        } else {
-          updatedTeam.push({
-            score: 162 - num,
-            bonusPoints: [],
-          });
-          setFirstTeamTotal(updatedTeam[counter].score + firstTeamTotal);
-        }
-        setColor("");
-        return updatedTeam;
-      });
-      setCounter(counter + 1);
-    }
-    number.current!.value = "";
+    const num = Number(number.current!.value);
+    const isFirstTeam = active === "1";
+    const setTeamScore = isFirstTeam ? setFirstTeamScore : setSecondTeamScore;
+    const setOtherTeamScore = isFirstTeam
+      ? setSecondTeamScore
+      : setFirstTeamScore;
+    const teamTotal = isFirstTeam ? firstTeamTotal : secondTeamTotal;
+    const setTeamTotal = isFirstTeam ? setFirstTeamTotal : setSecondTeamTotal;
+    const otherTeamTotal = isFirstTeam ? secondTeamTotal : firstTeamTotal;
+    const setOtherTeamTotal = isFirstTeam
+      ? setSecondTeamTotal
+      : setFirstTeamTotal;
+
+    setTeamScore((prevTeam) => {
+      const updatedTeam = [...prevTeam];
+      if (updatedTeam[counter]) {
+        updatedTeam[counter].score = num;
+        setTeamTotal(
+          updatedTeam[counter].score +
+            updatedTeam[counter].bonusPoints.reduce((a, b) => a + b, 0) +
+            teamTotal
+        );
+      } else {
+        updatedTeam.push({
+          score: num,
+          bonusPoints: [],
+        });
+        setTeamTotal(num + teamTotal);
+      }
+      return updatedTeam;
+    });
+
+    setOtherTeamScore((prevTeam) => {
+      const updatedTeam = [...prevTeam];
+      if (updatedTeam[counter]) {
+        updatedTeam[counter].score = 162 - num;
+        setOtherTeamTotal(
+          updatedTeam[counter].score +
+            updatedTeam[counter].bonusPoints.reduce((a, b) => a + b, 0) +
+            otherTeamTotal
+        );
+      } else {
+        updatedTeam.push({
+          score: 162 - num,
+          bonusPoints: [],
+        });
+        setOtherTeamTotal(updatedTeam[counter].score + otherTeamTotal);
+      }
+      number.current!.value = "";
+      setColor("");
+      return updatedTeam;
+    });
+
+    setCounter(counter + 1);
   };
 
   const updateTeamCallings = (number: number) => {
-    if (active === "1") {
-      setFirstTeamScore((prevTeam) => {
-        const updatedTeam = [...prevTeam];
-        if (updatedTeam[counter] && updatedTeam[counter].bonusPoints) {
-          updatedTeam[counter].bonusPoints.push(number);
-        } else {
-          updatedTeam.push({
-            score: 0,
-            bonusPoints: [number],
-          });
-        }
-        return updatedTeam;
-      });
-    } else {
-      setSecondTeamScore((prevTeam) => {
-        const updatedTeam = [...prevTeam];
-        if (updatedTeam[counter]) {
-          updatedTeam[counter].bonusPoints.push(number);
-        } else {
-          updatedTeam.push({
-            score: 0,
-            bonusPoints: [number],
-          });
-        }
-        return updatedTeam;
-      });
-    }
+    const [, setTeamScore] =
+      active === "1"
+        ? [firstTeamScore, setFirstTeamScore]
+        : [secondTeamScore, setSecondTeamScore];
+
+    setTeamScore((prevTeam) => {
+      const updatedTeam = [...prevTeam];
+      if (updatedTeam[counter]) {
+        updatedTeam[counter].bonusPoints.push(number);
+      } else {
+        updatedTeam.push({
+          score: 0,
+          bonusPoints: [number],
+        });
+      }
+      return updatedTeam;
+    });
   };
 
   return (
@@ -198,42 +176,18 @@ function Counter() {
           <div className="choose-color">
             <p className="color">Adut je: {color}</p>
             <div className="colors">
-              <button
-                className="heart-karo"
-                id={"Herc"}
-                onClick={(event) => {
-                  updateColor(event);
-                }}
-              >
-                ♥
-              </button>
-              <button
-                className="heart-karo"
-                id={"Kara"}
-                onClick={(event) => {
-                  updateColor(event);
-                }}
-              >
-                ♦
-              </button>
-              <button
-                className="spade"
-                id={"Pik"}
-                onClick={(event) => {
-                  updateColor(event);
-                }}
-              >
-                ♠
-              </button>
-              <button
-                className="club"
-                id={"Tref"}
-                onClick={(event) => {
-                  updateColor(event);
-                }}
-              >
-                ♣
-              </button>
+              {colorOptions.map((option) => (
+                <button
+                  key={option.id}
+                  className={option.className}
+                  id={option.id}
+                  onClick={(event) => {
+                    updateColor(event);
+                  }}
+                >
+                  {option.label}
+                </button>
+              ))}
             </div>
           </div>
           <div className="write-score">
@@ -266,69 +220,18 @@ function Counter() {
               Unesi
             </button>
             <p className="callings">Zvanja: </p>
-            <button
-              className="callings-button"
-              id={"20"}
-              onClick={(event) => {
-                updateTeamCallings(Number(event.currentTarget.id));
-              }}
-            >
-              3 zaredom / Bela
-            </button>
-            <button
-              className="callings-button"
-              id={"50"}
-              onClick={(event) => {
-                updateTeamCallings(Number(event.currentTarget.id));
-              }}
-            >
-              4 zaredom
-            </button>
-            <button
-              className="callings-button"
-              id={"100"}
-              onClick={(event) => {
-                updateTeamCallings(Number(event.currentTarget.id));
-              }}
-            >
-              5 zaredom
-            </button>
-            <button
-              className="callings-button"
-              id={"100"}
-              onClick={(event) => {
-                updateTeamCallings(Number(event.currentTarget.id));
-              }}
-            >
-              4 iste
-            </button>
-            <button
-              className="callings-button"
-              id={"150"}
-              onClick={(event) => {
-                updateTeamCallings(Number(event.currentTarget.id));
-              }}
-            >
-              4 deve
-            </button>
-            <button
-              className="callings-button"
-              id={"200"}
-              onClick={(event) => {
-                updateTeamCallings(Number(event.currentTarget.id));
-              }}
-            >
-              4 decka
-            </button>
-            <button
-              className="callings-button"
-              id={"1001"}
-              onClick={(event) => {
-                updateTeamCallings(Number(event.currentTarget.id));
-              }}
-            >
-              Belot
-            </button>
+            {callingOptions.map((option) => (
+              <button
+                key={option.id}
+                className="callings-button"
+                id={option.id}
+                onClick={(event) => {
+                  updateTeamCallings(Number(event.currentTarget.id));
+                }}
+              >
+                {option.text}
+              </button>
+            ))}
           </div>
         </div>
         <div className="score">
