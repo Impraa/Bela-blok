@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import "../styles/pages/Counter.scss";
 import { useState } from "react";
 import { Cards, Teams, Callings } from "../utils/Interfaces";
@@ -15,6 +15,10 @@ function Counter() {
   const [secondTeamScore, setSecondTeamScore] = useState<Teams[]>([]);
   const [firstTeamTotal, setFirstTeamTotal] = useState<number>(0);
   const [secondTeamTotal, setSecondTeamTotal] = useState<number>(0);
+
+  useEffect(() => {
+    checkScore();
+  }, [firstTeamTotal, secondTeamTotal]);
 
   const colorOptions: Cards[] = [
     { id: "Herc", label: "♥", className: "heart" },
@@ -63,6 +67,32 @@ function Counter() {
     }
   }
 
+  const checkScore = () => {
+    if (firstTeamTotal > 1001 && secondTeamTotal > 1001) {
+      if (firstTeamTotal > secondTeamTotal) {
+        resetGame();
+        console.log("Prvi team je pobjedio");
+      } else {
+        resetGame();
+        console.log("Drugi team je pobjedio");
+      }
+    } else if (firstTeamTotal > 1001) {
+      resetGame();
+      console.log("Prvi team je pobjedio");
+    } else if (secondTeamTotal > 1001) {
+      resetGame();
+      console.log("Drugi team je pobjedio");
+    }
+  };
+
+  const resetGame = () => {
+    setFirstTeamScore([]);
+    setFirstTeamTotal(0);
+    setSecondTeamScore([]);
+    setSecondTeamTotal(0);
+    setCounter(0);
+  };
+
   const updateTeamScore = (number: React.RefObject<HTMLInputElement>) => {
     const num = Number(number.current!.value);
     const isFirstTeam = active === "1";
@@ -80,7 +110,7 @@ function Counter() {
     setTeamScore((prevTeam) => {
       const updatedTeam = [...prevTeam];
       if (updatedTeam[counter]) {
-        updatedTeam[counter].score = num;
+        updatedTeam[counter].score = num === 162 ? num + 90 : num;
         setTeamTotal(
           updatedTeam[counter].score +
             updatedTeam[counter].bonusPoints.reduce((a, b) => a + b, 0) +
@@ -88,10 +118,10 @@ function Counter() {
         );
       } else {
         updatedTeam.push({
-          score: num,
+          score: num === 162 ? num + 90 : num,
           bonusPoints: [],
         });
-        setTeamTotal(num + teamTotal);
+        setTeamTotal(num === 162 ? num + 90 : num + teamTotal);
       }
       return updatedTeam;
     });
@@ -99,7 +129,7 @@ function Counter() {
     setOtherTeamScore((prevTeam) => {
       const updatedTeam = [...prevTeam];
       if (updatedTeam[counter]) {
-        updatedTeam[counter].score = 162 - num;
+        updatedTeam[counter].score = num + 162 === 162 ? num + 252 : 162 - num;
         setOtherTeamTotal(
           updatedTeam[counter].score +
             updatedTeam[counter].bonusPoints.reduce((a, b) => a + b, 0) +
@@ -107,7 +137,7 @@ function Counter() {
         );
       } else {
         updatedTeam.push({
-          score: 162 - num,
+          score: num + 162 === 162 ? num + 252 : 162 - num,
           bonusPoints: [],
         });
         setOtherTeamTotal(updatedTeam[counter].score + otherTeamTotal);
@@ -116,7 +146,7 @@ function Counter() {
       setColor("");
       return updatedTeam;
     });
-
+    checkScore();
     setCounter(counter + 1);
   };
 
@@ -176,9 +206,9 @@ function Counter() {
           <div className="choose-color">
             <p className="color">Adut je: {color}</p>
             <div className="colors">
-              {colorOptions.map((option) => (
+              {colorOptions.map((option, index) => (
                 <button
-                  key={option.id}
+                  key={index}
                   className={option.className}
                   id={option.id}
                   onClick={(event) => {
@@ -220,9 +250,9 @@ function Counter() {
               Unesi
             </button>
             <p className="callings">Zvanja: </p>
-            {callingOptions.map((option) => (
+            {callingOptions.map((option, index) => (
               <button
-                key={option.id}
+                key={index}
                 className="callings-button"
                 id={option.id}
                 onClick={(event) => {
