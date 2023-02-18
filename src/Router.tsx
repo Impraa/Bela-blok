@@ -5,10 +5,11 @@ import Error404 from "./pages/Error404";
 import Counter from "./pages/Counter";
 import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
+import "./styles/Router.scss";
 
 function Router() {
   return (
-    <div>
+    <div className="routes">
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/game" element={<Counter />} />

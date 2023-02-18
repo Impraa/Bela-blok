@@ -3,6 +3,7 @@
 .counter {
   display: flex;
   flex-direction: column;
+  height: 42em;
   margin: 5em 4em;
   .flash-message {
     transition: 0.2s ease-in;

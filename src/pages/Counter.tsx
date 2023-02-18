@@ -24,10 +24,10 @@ function Counter() {
   }, [firstTeamTotal, secondTeamTotal]);
 
   const colorOptions: Cards[] = [
-    { id: "Herc", label: "♥", className: "heart" },
-    { id: "Kara", label: "♦", className: "karo" },
-    { id: "Pik", label: "♠", className: "spade" },
-    { id: "Tref", label: "♣", className: "club" },
+    { id: "Herc", label: "H", className: "heart" },
+    { id: "Kara", label: "K", className: "karo" },
+    { id: "Pik", label: "P", className: "spade" },
+    { id: "Tref", label: "T", className: "club" },
   ];
 
   const callingOptions: Callings[] = [
