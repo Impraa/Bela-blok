@@ -39,6 +39,12 @@
   }
 }
 
+@media (min-width: 320px) {
+  .homepage {
+    margin: 16em 1.5em;
+  }
+}
+
 @media (min-width: 768px) {
   .homepage {
     margin: 17.5em 10em;

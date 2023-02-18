@@ -35,6 +35,60 @@
   }
 }
 
+@media (min-width: 320px) {
+  .faq {
+    .question {
+      margin: 0em 1em;
+      margin-top: 1em;
+    }
+    .question {
+      font-size: 1.5em;
+    }
+    .answer {
+      height: 18em;
+      margin: 0.1em 1.5em;
+    }
+    .answer-active {
+      font-size: 1em;
+    }
+  }
+}
+
+@media (min-width: 375px) {
+  .faq {
+    .answer {
+      height: 14em;
+    }
+  }
+}
+
+@media (min-width: 425px) {
+  .faq {
+    .answer {
+      height: 12em;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .faq {
+    .question {
+      margin: 0em 1em;
+      margin-top: 1em;
+    }
+    .question {
+      font-size: 2em;
+    }
+    .answer {
+      height: 10em;
+      margin: 0.1em 1.4em;
+    }
+    .answer-active {
+      font-size: 1.5em;
+    }
+  }
+}
+
 @media (min-width: 1024px) {
   .faq {
     .question {
@@ -42,7 +96,7 @@
       margin-top: 1em;
     }
     .answer {
-      margin: 0.1em 5em;
+      margin: 0.1em 5.01em;
     }
     .answer-active {
       font-size: 1.6em;

@@ -60,6 +60,27 @@
   }
 }
 
+@media (min-width: 320px) {
+  .contact {
+    margin: 0 1em;
+    margin-top: 15em;
+  }
+}
+
+@media (min-width: 375px) {
+  .contact {
+    margin: 0 3em;
+    margin-top: 15em;
+  }
+}
+
+@media (min-width: 425px) {
+  .contact {
+    margin: 0 4.5em;
+    margin-top: 15em;
+  }
+}
+
 @media (min-width: 768px) {
   .contact {
     margin: 0 15.5em;

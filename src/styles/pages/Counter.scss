@@ -187,21 +187,103 @@
   }
 }
 
+@media (min-width: 320px) {
+  .counter {
+    padding: 0;
+    margin: 3em 0em;
+    .flash-message {
+      width: 15em;
+    }
+    .win-message {
+      width: 15em;
+    }
+    .board {
+      height: 43em;
+      grid-template-columns: 10em 10em;
+      .options {
+        .write-score {
+          .callings-button {
+            background-color: $background;
+            border: 0.5px solid white;
+            color: white;
+            font-size: 1em;
+            transition: 0.2s ease-in;
+            margin: 0 0.3em;
+            &:hover {
+              border-color: $karoRed;
+              color: $karoRed;
+              transform: scale(1.2);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 375px) {
+  .counter {
+    .flash-message {
+      width: 18em;
+    }
+    .win-message {
+      width: 18em;
+    }
+    .board {
+      height: 40em;
+      grid-template-columns: 13em 11em;
+    }
+  }
+}
+
+@media (min-width: 425px) {
+  .counter {
+    .flash-message {
+      width: 20em;
+    }
+    .win-message {
+      width: 20em;
+    }
+    .board {
+      height: 40em;
+      grid-template-columns: 15em 11em;
+    }
+  }
+}
+
 @media (min-width: 768px) {
   .counter {
-    padding: 0 8em;
+    padding: 0 4em;
+    margin: 3em 4em;
+    .flash-message {
+      width: auto;
+    }
+    .win-message {
+      width: auto;
+    }
+    .board {
+      height: 42em;
+      grid-template-columns: 21em 11em;
+      .options {
+        .write-score {
+          .callings-button {
+            font-size: 1.2em;
+          }
+        }
+      }
+    }
   }
 }
 
 @media (min-width: 1024px) {
   .counter {
-    padding: 0 17em;
+    padding: 0 12em;
   }
 }
 
 @media (min-width: 1440px) {
   .counter {
-    padding: 0 31em;
+    padding: 0 25em;
   }
 }
 

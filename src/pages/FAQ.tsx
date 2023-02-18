@@ -30,14 +30,13 @@ function FAQ() {
   const Bounce = require("react-reveal/Bounce");
 
   const handleClick = (index: number) => {
-    console.log(index);
     setActiveIndex(activeIndex === index ? null : index);
   };
 
   return (
     <div>
-      {questions.map((item: FAQBody, index: number) => (
-        <Bounce bottom>
+      <Bounce bottom>
+        {questions.map((item: FAQBody, index: number) => (
           <div
             className="faq"
             onClick={() => {
@@ -57,8 +56,8 @@ function FAQ() {
               {item.text}
             </div>
           </div>
-        </Bounce>
-      ))}
+        ))}
+      </Bounce>
     </div>
   );
 }
