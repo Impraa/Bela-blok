@@ -190,7 +190,7 @@
 @media (min-width: 320px) {
   .counter {
     padding: 0;
-    margin: 3em 0em;
+    margin: 1em 0em;
     .flash-message {
       width: 15em;
     }
@@ -198,8 +198,9 @@
       width: 15em;
     }
     .board {
-      height: 43em;
-      grid-template-columns: 10em 10em;
+      height: 40em;
+      margin-bottom: 4em;
+      grid-template-columns: 13em 10em;
       .options {
         .write-score {
           .callings-button {
@@ -231,7 +232,8 @@
     }
     .board {
       height: 40em;
-      grid-template-columns: 13em 11em;
+      margin-bottom: 3em;
+      grid-template-columns: 13em 10em;
     }
   }
 }

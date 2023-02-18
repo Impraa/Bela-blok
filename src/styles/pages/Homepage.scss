@@ -41,7 +41,13 @@
 
 @media (min-width: 320px) {
   .homepage {
-    margin: 16em 1.5em;
+    margin: 8em 1.5em;
+  }
+}
+
+@media (min-width: 425px) {
+  .homepage {
+    margin: 17.5em 10em;
   }
 }
 
