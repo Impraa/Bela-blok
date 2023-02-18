@@ -1,0 +1,51 @@
+@import "../variables";
+
+.faq {
+  .question {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0em 1em;
+    margin-top: 1em;
+    padding: 0 0.5em;
+    font-size: 2em;
+    border-radius: 0.25em;
+    background-color: $background;
+    z-index: 2;
+  }
+  .answer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.1em 1.6em;
+    padding: 0 0.5em;
+    font-size: 0em;
+    height: 0em;
+    opacity: 0;
+    z-index: -1;
+    border-radius: 0.25em;
+    background-color: $background;
+    transition: 0.5s ease-in-out;
+  }
+  .answer-active {
+    font-size: 1.3em;
+    height: 13em;
+    opacity: 1;
+  }
+}
+
+@media (min-width: 1024px) {
+  .faq {
+    .question {
+      margin: 0em 4em;
+      margin-top: 1em;
+    }
+    .answer {
+      margin: 0.1em 5em;
+    }
+    .answer-active {
+      font-size: 1.6em;
+    }
+  }
+}

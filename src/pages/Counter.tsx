@@ -7,6 +7,7 @@ function Counter() {
   const [active, setActive] = useState<string>("1");
   const [color, setColor] = useState<string>("");
   const [showMessage, setShowMessage] = useState<boolean>(false);
+  const [showWinMsg, setShowWinMsg] = useState<boolean>(false);
   const [counter, setCounter] = useState<number>(0);
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -15,6 +16,8 @@ function Counter() {
   const [secondTeamScore, setSecondTeamScore] = useState<Teams[]>([]);
   const [firstTeamTotal, setFirstTeamTotal] = useState<number>(0);
   const [secondTeamTotal, setSecondTeamTotal] = useState<number>(0);
+
+  const Zoom = require("react-reveal/Zoom");
 
   useEffect(() => {
     checkScore();
@@ -41,7 +44,15 @@ function Counter() {
     setShowMessage(true);
     setTimeout(() => {
       setShowMessage(false);
-    }, 4000);
+    }, 3000);
+  };
+
+  const handleSuccessMessage = () => {
+    setShowWinMsg(true);
+    setTimeout(() => {
+      resetGame();
+      setShowWinMsg(false);
+    }, 3000);
   };
 
   const updateActive = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -70,18 +81,14 @@ function Counter() {
   const checkScore = () => {
     if (firstTeamTotal > 1001 && secondTeamTotal > 1001) {
       if (firstTeamTotal > secondTeamTotal) {
-        resetGame();
-        console.log("Prvi team je pobjedio");
+        handleSuccessMessage();
       } else {
-        resetGame();
-        console.log("Drugi team je pobjedio");
+        handleSuccessMessage();
       }
     } else if (firstTeamTotal > 1001) {
-      resetGame();
-      console.log("Prvi team je pobjedio");
+      handleSuccessMessage();
     } else if (secondTeamTotal > 1001) {
-      resetGame();
-      console.log("Drugi team je pobjedio");
+      handleSuccessMessage();
     }
   };
 
@@ -177,129 +184,139 @@ function Counter() {
           Broj nemoze biti veći od 162, ni manji od 0
         </p>
       )}
-      <div className="team-btns">
-        <button
-          className={active === "1" ? "active" : "first-team-btn"}
-          id={"first-btn"}
-          onClick={(event) => {
-            updateActive(event);
-          }}
-        >
-          Prvi team-Mi
-        </button>
-        <button
-          className={active === "2" ? "active" : "second-team-btn"}
-          id={"second-btn"}
-          onClick={(event) => {
-            updateActive(event);
-          }}
-        >
-          Drugi team-Vi
-        </button>
-      </div>
-      <div className="board">
-        <div className="options">
-          <p className="team-name">
-            {active === "1" ? "Prvi" : "Drugi"} team-
-            {active === "1" ? "Mi" : "Vi"}
-          </p>
-          <div className="choose-color">
-            <p className="color">Adut je: {color}</p>
-            <div className="colors">
-              {colorOptions.map((option, index) => (
+      {showWinMsg && (
+        <p className="win-message">
+          Svaka čast{" "}
+          {firstTeamTotal > secondTeamTotal
+            ? "Prvom timu - nama"
+            : "Drugom timu - vama"}
+        </p>
+      )}
+      <Zoom>
+        <div className="team-btns">
+          <button
+            className={active === "1" ? "active" : "first-team-btn"}
+            id={"first-btn"}
+            onClick={(event) => {
+              updateActive(event);
+            }}
+          >
+            Prvi team-Mi
+          </button>
+          <button
+            className={active === "2" ? "active" : "second-team-btn"}
+            id={"second-btn"}
+            onClick={(event) => {
+              updateActive(event);
+            }}
+          >
+            Drugi team-Vi
+          </button>
+        </div>
+        <div className="board">
+          <div className="options">
+            <p className="team-name">
+              {active === "1" ? "Prvi" : "Drugi"} team-
+              {active === "1" ? "Mi" : "Vi"}
+            </p>
+            <div className="choose-color">
+              <p className="color">Adut je: {color}</p>
+              <div className="colors">
+                {colorOptions.map((option, index) => (
+                  <button
+                    key={index}
+                    className={option.className}
+                    id={option.id}
+                    onClick={(event) => {
+                      updateColor(event);
+                    }}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="write-score">
+              <label htmlFor={active === "1" ? "first-score" : "second-score"}>
+                Unesi Broj Bodova:
+              </label>
+              <input
+                type="number"
+                min={1}
+                max={162}
+                pattern="[0-9]"
+                id={active === "1" ? "first-score" : "second-score"}
+                className="input"
+                ref={inputRef}
+              />
+              <button
+                className="write-score-btn"
+                onClick={() => {
+                  if (
+                    Number(inputRef.current!.value) > 162 ||
+                    Number(inputRef.current!.value) < 0
+                  ) {
+                    handleClickButton();
+                    inputRef.current!.value = "";
+                    return;
+                  }
+                  updateTeamScore(inputRef);
+                }}
+              >
+                Unesi
+              </button>
+              <p className="callings">Zvanja: </p>
+              {callingOptions.map((option, index) => (
                 <button
                   key={index}
-                  className={option.className}
+                  className="callings-button"
                   id={option.id}
                   onClick={(event) => {
-                    updateColor(event);
+                    updateTeamCallings(Number(event.currentTarget.id));
                   }}
                 >
-                  {option.label}
+                  {option.text}
                 </button>
               ))}
             </div>
           </div>
-          <div className="write-score">
-            <label htmlFor={active === "1" ? "first-score" : "second-score"}>
-              Unesi Broj Bodova:
-            </label>
-            <input
-              type="number"
-              min={1}
-              max={162}
-              pattern="[0-9]"
-              id={active === "1" ? "first-score" : "second-score"}
-              className="input"
-              ref={inputRef}
-            />
-            <button
-              className="write-score-btn"
-              onClick={() => {
-                if (
-                  Number(inputRef.current!.value) > 162 ||
-                  Number(inputRef.current!.value) < 0
-                ) {
-                  handleClickButton();
-                  inputRef.current!.value = "";
-                  return;
-                }
-                updateTeamScore(inputRef);
-              }}
-            >
-              Unesi
-            </button>
-            <p className="callings">Zvanja: </p>
-            {callingOptions.map((option, index) => (
-              <button
-                key={index}
-                className="callings-button"
-                id={option.id}
-                onClick={(event) => {
-                  updateTeamCallings(Number(event.currentTarget.id));
-                }}
-              >
-                {option.text}
-              </button>
-            ))}
-          </div>
-        </div>
-        <div className="score">
-          <div className="games">
-            Bodovi:
-            {[firstTeamScore, secondTeamScore][active === "1" ? 0 : 1].map(
-              (item, index) => (
-                <div key={index}>
-                  <div>
-                    Zvanja:
-                    {item.bonusPoints.map((point, i) => (
-                      <p key={i}>
-                        {point}
-                        {item.score !== 0 ? (
-                          ""
-                        ) : (
-                          <button
-                            className="delete-calling-btn"
-                            onClick={() => handleDeleteBonusPoint(i, index)}
-                          >
-                            X
-                          </button>
-                        )}
-                      </p>
-                    ))}
+          <div className="score">
+            <div className="games">
+              Bodovi:
+              {[firstTeamScore, secondTeamScore][active === "1" ? 0 : 1].map(
+                (item, index) => (
+                  <div key={index}>
+                    <div>
+                      Zvanja:
+                      {item.bonusPoints.map((point, i) => (
+                        <p key={i}>
+                          {point}
+                          {item.score !== 0 ? (
+                            ""
+                          ) : (
+                            <button
+                              className="delete-calling-btn"
+                              onClick={() => handleDeleteBonusPoint(i, index)}
+                            >
+                              X
+                            </button>
+                          )}
+                        </p>
+                      ))}
+                    </div>
+                    <p>Igra:</p>
+                    <p>{item.score}</p>
                   </div>
-                  <p>Igra:</p>
-                  <p>{item.score}</p>
-                </div>
-              )
-            )}
-          </div>
-          <div className="total">
-            Sveukupno:
-            <p>{active === "1" ? firstTeamTotal : secondTeamTotal}</p>
+                )
+              )}
+            </div>
+            <div className="total">
+              Sveukupno:
+              <p>{active === "1" ? firstTeamTotal : secondTeamTotal}</p>
+            </div>
           </div>
         </div>
-      </div>
+      </Zoom>
     </div>
   );
 }

@@ -1,0 +1,8 @@
+.up-arrow {
+  width: 2em;
+  filter: brightness(5) grayscale(100%);
+  transition: 0.2s ease-in-out;
+  &:hover {
+    filter: hue-rotate(180deg);
+  }
+}

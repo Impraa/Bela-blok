@@ -18,3 +18,8 @@ export interface Callings{
     id:string,
     text:string,
 }
+
+export interface FAQBody {
+    question : string,
+    text: string,
+}

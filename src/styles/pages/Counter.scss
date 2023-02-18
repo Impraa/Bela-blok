@@ -9,9 +9,31 @@
     background-color: $karoRed;
     align-self: center;
     padding: 0.5em 2em;
+    animation: fadeOut 3s ease-in-out;
+  }
+  .win-message {
+    transition: 0.2s ease-in;
+    background-color: #528616;
+    align-self: center;
+    padding: 0.5em 2em;
+    animation: fadeOut 3s ease-in-out;
+  }
+
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    80% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      visibility: hidden;
+    }
   }
   .team-btns {
     .first-team-btn {
+      cursor: pointer;
       border: 0.5px solid $background;
       border-right: none;
       background-color: $background;
@@ -24,6 +46,7 @@
       }
     }
     .second-team-btn {
+      cursor: pointer;
       border: 0.5px solid $background;
       border-left: none;
       background-color: $background;
@@ -35,6 +58,7 @@
       }
     }
     .active {
+      cursor: pointer;
       border: 0.5px solid $background;
       background-color: $background;
       font-size: 1.5em;
@@ -160,5 +184,29 @@
   }
   .score::-webkit-scrollbar {
     display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .counter {
+    padding: 0 8em;
+  }
+}
+
+@media (min-width: 1024px) {
+  .counter {
+    padding: 0 17em;
+  }
+}
+
+@media (min-width: 1440px) {
+  .counter {
+    padding: 0 31em;
+  }
+}
+
+@media (min-width: 1920px) {
+  .counter {
+    padding: 0 41em;
   }
 }
