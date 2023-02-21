@@ -13,7 +13,6 @@ function Navbar() {
   const NavItems: NavItems[] = [
     { text: "Blok", path: "/game" },
     { text: "FAQ", path: "/faq" },
-    { text: "Kontaktiraj me", path: "/contact" },
   ];
 
   return (
