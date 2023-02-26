@@ -20,6 +20,16 @@ function Counter() {
   const Zoom = require("react-reveal/Zoom");
 
   useEffect(() => {
+    if (firstTeamTotal === 0 && secondTeamTotal === 0) {
+      setFirstTeamTotal(Number(sessionStorage.getItem("firstTeamTotal")));
+      setSecondTeamTotal(Number(sessionStorage.getItem("secondTeamTotal")));
+    } else {
+      sessionStorage.setItem("firstTeamTotal", JSON.stringify(firstTeamTotal));
+      sessionStorage.setItem(
+        "secondTeamTotal",
+        JSON.stringify(secondTeamTotal)
+      );
+    }
     checkScore();
   }, [firstTeamTotal, secondTeamTotal]);
 
@@ -117,7 +127,7 @@ function Counter() {
     setTeamScore((prevTeam) => {
       const updatedTeam = [...prevTeam];
       if (updatedTeam[counter]) {
-        updatedTeam[counter].score = num === 162 ? num + 90 : num;
+        updatedTeam[counter].score = num;
         setTeamTotal(
           updatedTeam[counter].score +
             updatedTeam[counter].bonusPoints.reduce((a, b) => a + b, 0) +
@@ -125,10 +135,10 @@ function Counter() {
         );
       } else {
         updatedTeam.push({
-          score: num === 162 ? num + 90 : num,
+          score: num,
           bonusPoints: [],
         });
-        setTeamTotal(num === 162 ? num + 90 : num + teamTotal);
+        setTeamTotal(num + teamTotal);
       }
       return updatedTeam;
     });
@@ -136,7 +146,7 @@ function Counter() {
     setOtherTeamScore((prevTeam) => {
       const updatedTeam = [...prevTeam];
       if (updatedTeam[counter]) {
-        updatedTeam[counter].score = num + 162 === 162 ? num + 252 : 162 - num;
+        updatedTeam[counter].score = 162 - num;
         setOtherTeamTotal(
           updatedTeam[counter].score +
             updatedTeam[counter].bonusPoints.reduce((a, b) => a + b, 0) +
@@ -144,7 +154,7 @@ function Counter() {
         );
       } else {
         updatedTeam.push({
-          score: num + 162 === 162 ? num + 252 : 162 - num,
+          score: 162 - num,
           bonusPoints: [],
         });
         setOtherTeamTotal(updatedTeam[counter].score + otherTeamTotal);
@@ -176,6 +186,45 @@ function Counter() {
       return updatedTeam;
     });
   };
+
+  function calculateStilja() {
+    const isFirstTeam = active === "1";
+    const otherTeamScore = isFirstTeam ? secondTeamScore : firstTeamScore;
+    const setTeamScore = isFirstTeam ? setFirstTeamScore : setSecondTeamScore;
+    const teamTotal = isFirstTeam ? firstTeamTotal : secondTeamTotal;
+    const setTeamTotal = isFirstTeam ? setFirstTeamTotal : setSecondTeamTotal;
+
+    setTeamScore((prevTeam) => {
+      const updatedTeam = [...prevTeam];
+      if (updatedTeam[counter]) {
+        updatedTeam[counter].score = 252;
+        setTeamTotal(
+          updatedTeam[counter].score +
+            updatedTeam[counter].bonusPoints.reduce((a, b) => a + b, 0) +
+            teamTotal +
+            otherTeamScore[counter].bonusPoints.reduce((a, b) => a + b, 0)
+        );
+      } else {
+        updatedTeam.push({
+          score: 252,
+          bonusPoints: [
+            otherTeamScore[counter]?.bonusPoints?.reduce((a, b) => a + b, 0) ??
+              0,
+          ],
+        });
+        setTeamTotal(
+          252 +
+            teamTotal +
+            (updatedTeam[counter]?.bonusPoints?.reduce((a, b) => a + b, 0) ?? 0)
+        );
+      }
+      otherTeamScore[counter].bonusPoints = [];
+      setColor("");
+      checkScore();
+      setCounter(counter + 1);
+      return updatedTeam;
+    });
+  }
 
   return (
     <div className="counter">
@@ -278,6 +327,14 @@ function Counter() {
                   {option.text}
                 </button>
               ))}
+              <button
+                className="callings-button"
+                onClick={() => {
+                  calculateStilja();
+                }}
+              >
+                Štilja
+              </button>
             </div>
           </div>
           <div className="score">

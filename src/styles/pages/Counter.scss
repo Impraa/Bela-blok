@@ -3,7 +3,7 @@
 .counter {
   display: flex;
   flex-direction: column;
-  height: 42em;
+  height: 45em;
   margin: 5em 4em;
   .flash-message {
     transition: 0.2s ease-in;
@@ -72,7 +72,7 @@
   }
   .board {
     background-color: $background;
-    height: 39.7em;
+    height: 45em;
     display: grid;
     grid-template-columns: 15em 10em;
     .options {
@@ -199,7 +199,7 @@
       width: 15em;
     }
     .board {
-      height: 40em;
+      height: 49em;
       margin-bottom: 4em;
       grid-template-columns: 13em 10em;
       .options {
@@ -232,7 +232,7 @@
       width: 18em;
     }
     .board {
-      height: 40em;
+      height: 49em;
       margin-bottom: 3em;
       grid-template-columns: 13em 10em;
     }
@@ -248,7 +248,7 @@
       width: 20em;
     }
     .board {
-      height: 40em;
+      height: 55em;
       grid-template-columns: 15em 11em;
     }
   }
@@ -265,7 +265,7 @@
       width: auto;
     }
     .board {
-      height: 42em;
+      height: 54em;
       grid-template-columns: 21em 11em;
       .options {
         .write-score {
