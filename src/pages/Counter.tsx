@@ -12,6 +12,7 @@ function Counter() {
   const [color, setColor] = useState<string>("");
   const [showMessage, setShowMessage] = useState<boolean>(false);
   const [showWinMsg, setShowWinMsg] = useState<boolean>(false);
+  const [gameReset, setGameReset] = useState<boolean>(false);
   const [showBonusPoints, setShowBonusPoints] = useState<boolean>(false);
   const [counter, setCounter] = useState<number>(0);
 
@@ -25,7 +26,12 @@ function Counter() {
   const Zoom = require("react-reveal/Zoom");
 
   useEffect(() => {
-    if (firstTeamTotal === 0 && secondTeamTotal === 0) {
+    checkScore();
+    if (gameReset === true) {
+      sessionStorage.setItem("firstTeamTotal", "0");
+      sessionStorage.setItem("secondTeamTotal", "0");
+      setGameReset(false);
+    } else if (firstTeamTotal === 0 && secondTeamTotal === 0) {
       setFirstTeamTotal(Number(sessionStorage.getItem("firstTeamTotal")));
       setSecondTeamTotal(Number(sessionStorage.getItem("secondTeamTotal")));
     } else {
@@ -35,7 +41,6 @@ function Counter() {
         JSON.stringify(secondTeamTotal)
       );
     }
-    checkScore();
   }, [firstTeamTotal, secondTeamTotal]);
 
   const colorOptions: Cards[] = [
@@ -101,13 +106,16 @@ function Counter() {
     if (firstTeamTotal > 1001 && secondTeamTotal > 1001) {
       if (firstTeamTotal > secondTeamTotal) {
         handleSuccessMessage();
+        setGameReset(true);
       } else {
         handleSuccessMessage();
       }
     } else if (firstTeamTotal > 1001) {
       handleSuccessMessage();
+      setGameReset(true);
     } else if (secondTeamTotal > 1001) {
       handleSuccessMessage();
+      setGameReset(true);
     }
   };
 
