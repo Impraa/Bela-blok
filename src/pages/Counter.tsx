@@ -2,12 +2,17 @@ import React, { useEffect, useRef } from "react";
 import "../styles/pages/Counter.scss";
 import { useState } from "react";
 import { Cards, Teams, Callings } from "../utils/Interfaces";
+import hercSlika from "../utils/images/hercSimbol.png";
+import karaSlika from "../utils/images/karaSimbol.png";
+import pikSlika from "../utils/images/pikSimbol.png";
+import terfSlika from "../utils/images/trefSimbol.png";
 
 function Counter() {
   const [active, setActive] = useState<string>("1");
   const [color, setColor] = useState<string>("");
   const [showMessage, setShowMessage] = useState<boolean>(false);
   const [showWinMsg, setShowWinMsg] = useState<boolean>(false);
+  const [showBonusPoints, setShowBonusPoints] = useState<boolean>(false);
   const [counter, setCounter] = useState<number>(0);
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -34,10 +39,10 @@ function Counter() {
   }, [firstTeamTotal, secondTeamTotal]);
 
   const colorOptions: Cards[] = [
-    { id: "Herc", label: "H", className: "heart" },
-    { id: "Kara", label: "K", className: "karo" },
-    { id: "Pik", label: "P", className: "spade" },
-    { id: "Tref", label: "T", className: "club" },
+    { id: "Herc", label: hercSlika, className: "heart" },
+    { id: "Kara", label: karaSlika, className: "karo" },
+    { id: "Pik", label: pikSlika, className: "spade" },
+    { id: "Tref", label: terfSlika, className: "club" },
   ];
 
   const callingOptions: Callings[] = [
@@ -49,6 +54,10 @@ function Counter() {
     { id: "200", text: "4 decka" },
     { id: "1001", text: "Belot" },
   ];
+
+  const handleShowBonusPoints = () => {
+    setShowBonusPoints(!showBonusPoints);
+  };
 
   const handleClickButton = () => {
     setShowMessage(true);
@@ -280,7 +289,7 @@ function Counter() {
                       updateColor(event);
                     }}
                   >
-                    {option.label}
+                    <img src={option.label} alt="" className="color-image" />
                   </button>
                 ))}
               </div>
@@ -314,27 +323,40 @@ function Counter() {
               >
                 Unesi
               </button>
-              <p className="callings">Zvanja: </p>
-              {callingOptions.map((option, index) => (
+              <button
+                onClick={() => {
+                  handleShowBonusPoints();
+                }}
+                className="callings-btn"
+              >
+                Zvanja{" "}
+                <span className={showBonusPoints ? "arrow-active" : "arrow"}>
+                  {" "}
+                  &lt;
+                </span>
+              </button>
+              <div className={showBonusPoints ? "callings-active" : "callings"}>
+                {callingOptions.map((option, index) => (
+                  <button
+                    key={index}
+                    className="callings-button"
+                    id={option.id}
+                    onClick={(event) => {
+                      updateTeamCallings(Number(event.currentTarget.id));
+                    }}
+                  >
+                    {option.text}
+                  </button>
+                ))}
                 <button
-                  key={index}
                   className="callings-button"
-                  id={option.id}
-                  onClick={(event) => {
-                    updateTeamCallings(Number(event.currentTarget.id));
+                  onClick={() => {
+                    calculateStilja();
                   }}
                 >
-                  {option.text}
+                  Štilja
                 </button>
-              ))}
-              <button
-                className="callings-button"
-                onClick={() => {
-                  calculateStilja();
-                }}
-              >
-                Štilja
-              </button>
+              </div>
             </div>
           </div>
           <div className="score">

@@ -86,19 +86,41 @@
         .colors {
           .heart,
           .karo {
+            background-color: white;
+            border: none;
             font-size: 2.5em;
             color: $karoRed;
+            margin-right: 0.1em;
             transition: 0.2s ease-in;
             &:hover {
               font-size: 2.9em;
             }
+            img {
+              width: 0.85em;
+              filter: grayscale(100%);
+              transition: 0.2s ease-in-out;
+              &:hover {
+                filter: grayscale(0%);
+              }
+            }
           }
           .spade,
           .club {
+            background-color: white;
+            border: none;
             font-size: 2.5em;
+            margin-right: 0.1em;
             transition: 0.2s ease-in;
             &:hover {
               font-size: 2.9em;
+            }
+            img {
+              width: 0.85em;
+              filter: grayscale(100%);
+              transition: 0.2s ease-in-out;
+              &:hover {
+                filter: grayscale(0%);
+              }
             }
           }
         }
@@ -146,17 +168,67 @@
             transform: scale(1.2);
           }
         }
-        .callings-button {
+
+        .callings-btn {
           background-color: $background;
-          border: 0.5px solid white;
           color: white;
-          font-size: 1.1em;
-          transition: 0.2s ease-in;
-          margin: 0 0.8em;
-          &:hover {
-            border-color: $karoRed;
-            color: $karoRed;
-            transform: scale(1.2);
+          border: none;
+          margin: 0.5em 0em;
+          margin-right: 2em;
+          font-size: 1.2em;
+          text-align: center;
+          .arrow {
+            display: inline-block;
+            transform: rotate(270deg);
+            transition: 0.2s ease-in-out;
+          }
+          .arrow-active {
+            display: inline-block;
+            transform: rotate(90deg);
+            transition: 0.2s ease-in-out;
+          }
+        }
+
+        .callings {
+          height: 0em;
+          opacity: 0;
+          display: flex;
+          flex-direction: column;
+          pointer-events: none;
+          transition: 0.2s ease-in-out;
+          .callings-button {
+            background-color: $background;
+            border: 0.5px solid white;
+            color: white;
+            font-size: 1.1em;
+            transition: 0.2s ease-in;
+            margin: 0 0.8em;
+            &:hover {
+              border-color: $karoRed;
+              color: $karoRed;
+              transform: scale(1.2);
+            }
+          }
+        }
+        .callings-active {
+          height: 13.5em;
+          opacity: 1;
+          display: flex;
+          flex-direction: column;
+          pointer-events: all;
+          transition: 0.2s ease-in-out;
+          .callings-button {
+            background-color: $background;
+            border: 0.5px solid white;
+            color: white;
+            font-size: 1.1em;
+            transition: 0.2s ease-in;
+            margin: 0em 0.8em;
+            &:hover {
+              border-color: $karoRed;
+              color: $karoRed;
+              transform: scale(1.2);
+            }
           }
         }
       }
