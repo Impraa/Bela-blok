@@ -134,6 +134,7 @@ function Counter() {
     const setOtherTeamScore = isFirstTeam
       ? setSecondTeamScore
       : setFirstTeamScore;
+    const otherTeam = isFirstTeam ? secondTeamScore : firstTeamScore;
     const teamTotal = isFirstTeam ? firstTeamTotal : secondTeamTotal;
     const setTeamTotal = isFirstTeam ? setFirstTeamTotal : setSecondTeamTotal;
     const otherTeamTotal = isFirstTeam ? secondTeamTotal : firstTeamTotal;
@@ -145,17 +146,31 @@ function Counter() {
       const updatedTeam = [...prevTeam];
       if (updatedTeam[counter]) {
         updatedTeam[counter].score = num;
-        setTeamTotal(
-          updatedTeam[counter].score +
-            updatedTeam[counter].bonusPoints.reduce((a, b) => a + b, 0) +
-            teamTotal
-        );
+        num === 162
+          ? setTeamTotal(
+              updatedTeam[counter].score +
+                updatedTeam[counter].bonusPoints.reduce((a, b) => a + b, 0) +
+                otherTeam[counter].bonusPoints.reduce((a, b) => a + b, 0) +
+                teamTotal
+            )
+          : setTeamTotal(
+              updatedTeam[counter].score +
+                updatedTeam[counter].bonusPoints.reduce((a, b) => a + b, 0) +
+                teamTotal
+            );
       } else {
         updatedTeam.push({
           score: num,
-          bonusPoints: [],
+          bonusPoints:
+            num === 162
+              ? [otherTeam[counter].bonusPoints.reduce((a, b) => a + b, 0)]
+              : [],
         });
-        setTeamTotal(num + teamTotal);
+        setTeamTotal(
+          num + teamTotal + num === 162
+            ? otherTeam[counter].bonusPoints.reduce((a, b) => a + b, 0)
+            : 0
+        );
       }
       return updatedTeam;
     });
@@ -164,11 +179,16 @@ function Counter() {
       const updatedTeam = [...prevTeam];
       if (updatedTeam[counter]) {
         updatedTeam[counter].score = 162 - num;
-        setOtherTeamTotal(
-          updatedTeam[counter].score +
-            updatedTeam[counter].bonusPoints.reduce((a, b) => a + b, 0) +
-            otherTeamTotal
-        );
+        if (num === 162) {
+          setOtherTeamTotal(0);
+          otherTeam[counter].bonusPoints = [];
+        } else {
+          setOtherTeamTotal(
+            updatedTeam[counter].score +
+              updatedTeam[counter].bonusPoints.reduce((a, b) => a + b, 0) +
+              otherTeamTotal
+          );
+        }
       } else {
         updatedTeam.push({
           score: 162 - num,
