@@ -166,11 +166,13 @@ function Counter() {
               ? [otherTeam[counter].bonusPoints.reduce((a, b) => a + b, 0)]
               : [],
         });
-        setTeamTotal(
-          num + teamTotal + num === 162
-            ? otherTeam[counter].bonusPoints.reduce((a, b) => a + b, 0)
-            : 0
-        );
+        num === 162
+          ? setTeamTotal(
+              num +
+                teamTotal +
+                otherTeam[counter].bonusPoints.reduce((a, b) => a + b, 0)
+            )
+          : setTeamTotal(num + teamTotal);
       }
       return updatedTeam;
     });
